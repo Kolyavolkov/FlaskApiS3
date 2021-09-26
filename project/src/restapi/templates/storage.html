@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}S3 Bucket List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="#" method="POST">
+        <p>Enter your username</p>
+        <p><input type="text" name="username" /></p>
+        <p><input type="submit" value="submit"/></p>
+    </form>
+</div>
+<div class="container">
+<table class="table table-striped">
+    <tr>
+      <th>Filename</th>
+      <th>Last Modified</th>
+      <th>Type</th>
+      <th></th>
+    </tr>
+    {% for f in files %}
+    <tr>
+      <td>{{ f.key }}</td>
+      <td>{{ f.last_modified | datetimeformat }}</td>
+      <td>{{ f.key | file_type }}</td>
+      <td class="td-buttons">
+        <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
+          <input type="hidden" name="key" value="{{ f.key }}">
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fa fa-trash-alt"></i>
+          </button>
+        </form>
+        <form class="download-form" action="{{ url_for('download') }}" method="POST">
+          <input type="hidden" name="key" value="{{ f.key }}">
+          <button type="submit" class="btn btn-default btn-sm">
+            <i class="fa fa-download"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}
