@@ -1,16 +1,15 @@
-import boto3
-from flask import session
+from flask import jsonify
+from flask_restful import Resource
+from restapi.bucket import get_bucket, get_buckets_list
 
 
-def get_bucket():
-    if "bucket" in session:
-        bucket = session["bucket"]
-    else:
-        bucket = S3_BUCKET
-
-    return boto3.resource("s3").Bucket(bucket)
+class HelloWorld(Resource):
+    def get(self):
+        return {"hello": "world"}
 
 
-def get_buckets_list():
-    client = boto3.client("s3")
-    return client.list_buckets().get("Buckets")
+class ListBuckets(Resource):
+    def get(self):
+        response = jsonify(get_buckets_list())
+        response.status_code = 200
+        return response

@@ -2,7 +2,6 @@ from restapi import app
 import os
 import secrets
 from flask import (
-    Flask,
     render_template,
     request,
     redirect,
@@ -11,7 +10,7 @@ from flask import (
     Response,
     session,
 )
-from restapi.resources import get_bucket, get_buckets_list
+from restapi.bucket import get_bucket, get_buckets_list
 
 
 @app.route("/", methods=["GET", "POST"])
