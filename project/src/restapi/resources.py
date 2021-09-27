@@ -22,3 +22,13 @@ class ListFiles(Resource):
         all_files = list(my_bucket.objects.filter(Prefix=username))
         response = jsonify([object.key for object in all_files])
         return response
+
+
+class DeleteFile(Resource):
+    def delete(self):
+        pass
+
+
+class UploadFile(Resource):
+    def upload(self):
+        pass
