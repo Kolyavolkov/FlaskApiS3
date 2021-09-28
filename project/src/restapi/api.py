@@ -6,6 +6,6 @@ from restapi.resources import HelloWorld, ListBuckets, ListFiles, DeleteFile, Up
 api = Api(app)
 api.add_resource(HelloWorld, "/api")
 api.add_resource(ListBuckets, "/api/buckets")
-api.add_resource(ListFiles, "/api/<string:bucketname>/<string:username>")
+api.add_resource(ListFiles, "/api/<string:bucket>/<string:user>")
 api.add_resource(UploadFile, "/api/upload")
-api.add_resource(DeleteFile, "/api/delete/<string:bucketname>/<string:filename>")
+api.add_resource(DeleteFile, "/api/delete")
