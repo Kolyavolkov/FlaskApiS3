@@ -1,5 +1,5 @@
 import boto3
-from flask import jsonify
+from flask import jsonify, request
 from flask.wrappers import Response
 from flask_restful import Resource
 from restapi.bucket import get_bucket, get_buckets_list
@@ -28,10 +28,13 @@ class ListFiles(Resource):
 
 class DeleteFile(Resource):
     def post(self, bucketname, filename):
-        key = filename
         my_bucket = boto3.resource("s3").Bucket(bucketname)
-        my_bucket.Object(key).delete()
-        return {"Object": "deleted"}
+        all_files = [object.key for object in my_bucket.objects.all()]
+        if filename in all_files:
+            my_bucket.Object(filename).delete()
+            return {"Object": "Deleted"}
+        else:
+            return {"Object": "Not Found"}
 
 
 class UploadFile(Resource):
