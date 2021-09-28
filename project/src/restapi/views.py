@@ -11,6 +11,18 @@ from flask import (
     session,
 )
 from restapi.bucket import get_bucket, get_buckets_list
+from healthcheck import HealthCheck
+
+
+health = HealthCheck()
+
+
+def app_hc():
+    return True, "UP"
+
+
+health.add_check(app_hc)
+app.add_url_rule("/health", "healthcheck", view_func=lambda: health.run())
 
 
 @app.route("/", methods=["GET", "POST"])
