@@ -35,6 +35,12 @@ class BasicTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    def test_healthcheck(self):
+        tester = app.test_client(self)
+        response = tester.get("/health", content_type="html/text")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(b"success" in response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
