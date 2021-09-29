@@ -1,6 +1,7 @@
 __version__ = "0.1.0"
 from flask import Flask
 from flask_bootstrap import Bootstrap
+
 from restapi.filters import datetimeformat, file_type
 
 
@@ -12,8 +13,9 @@ app.jinja_env.filters["datetimeformat"] = datetimeformat
 app.jinja_env.filters["file_type"] = file_type
 
 
-import restapi.views
 import restapi.api
+import restapi.views
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

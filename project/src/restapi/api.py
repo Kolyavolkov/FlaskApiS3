@@ -1,6 +1,7 @@
-from restapi import app
 from flask_restful import Api
-from restapi.resources import HelloWorld, ListBuckets, ListFiles, DeleteFile, UploadFile
+
+from restapi import app
+from restapi.resources import DeleteFile, HelloWorld, ListBuckets, ListFiles, UploadFile
 
 
 api = Api(app)

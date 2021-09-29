@@ -1,7 +1,7 @@
-from restapi import __version__
-from restapi import app
 import unittest
 from io import BytesIO
+
+from restapi import __version__, app
 
 
 def test_version():
@@ -13,7 +13,7 @@ class BasicTestCase(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/api", content_type="html/text")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b'{\n    "hello": "world"\n}\n')
+        self.assertEqual(response.data, b'{"hello": "world"}\n')
 
     def test_buckets(self):
         tester = app.test_client(self)

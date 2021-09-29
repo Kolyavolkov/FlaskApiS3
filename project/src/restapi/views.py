@@ -1,17 +1,11 @@
-from restapi import app
 import os
 import secrets
-from flask import (
-    render_template,
-    request,
-    redirect,
-    url_for,
-    flash,
-    Response,
-    session,
-)
-from restapi.bucket import get_bucket, get_buckets_list
+
+from flask import Response, flash, redirect, render_template, request, session, url_for
 from healthcheck import HealthCheck
+
+from restapi import app
+from restapi.bucket import get_bucket, get_buckets_list
 
 
 health = HealthCheck()

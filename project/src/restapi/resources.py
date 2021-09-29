@@ -1,9 +1,10 @@
-import boto3
-import secrets
 import os
+import secrets
+
+import boto3
 from flask import jsonify, request
-from flask.wrappers import Response
 from flask_restful import Resource
+
 from restapi.bucket import get_buckets_list
 
 
