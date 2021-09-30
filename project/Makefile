@@ -1,35 +1,30 @@
-INSTALL_STAMP := .install.stamp
-POETRY := $(shell command -v poetry 2> /dev/null)
-
+APP_PATH := /app/src
 .DEFAULT_GOAL := help
 
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
 	@echo ""
-	@echo "  install     install packages and prepare environment"
 	@echo "  clean       remove all temporary files"
 	@echo "  lint        run the code linters"
 	@echo "  test        run all the tests"
+	@echo "  run         run flask app"
 	@echo ""
-
-install: $(INSTALL_STAMP)
-$(INSTALL_STAMP): pyproject.toml poetry.lock
-	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
-	$(POETRY) install
-	touch $(INSTALL_STAMP)
 
 clean:
 	find . -type d -name "__pycache__" | xargs rm -rf {};
-	rm -rf $(INSTALL_STAMP) .coverage .mypy_cache .pytest_cache
+	rm -rf .coverage .mypy_cache .pytest_cache
 
-lint: $(INSTALL_STAMP)
-	$(POETRY) run isort --profile=black --lines-after-imports=2 ./
-	$(POETRY) run black ./
-	$(POETRY) run flake8 --ignore=W503,E501,E402,F401,F821 ./
-	$(POETRY) run mypy ./ --ignore-missing-imports
-	$(POETRY) run bandit -r ./ -s B101,B104
+lint:
+	poetry run isort --profile=black --lines-after-imports=2 ${APP_PATH}
+	poetry run black ${APP_PATH}
+	poetry run flake8 --ignore=W503,E501,E402,F401,F821 ${APP_PATH}
+	poetry run mypy ${APP_PATH} --ignore-missing-imports
+	poetry run bandit -r ${APP_PATH} -s B101,B104
 
-test: $(INSTALL_STAMP)
-	$(POETRY) run pytest ./
+test:
+	poetry run pytest tests
 
-.PHONY: help test lint clean install
+run:
+	poetry run flask run
+
+.PHONY: help test lint clean run
