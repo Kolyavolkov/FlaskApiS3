@@ -17,15 +17,15 @@ App now is available by this DNS name.
 # Project folder contains the api itself
 
 CURL commands to use API :
-'''
+```bash
 curl load.balancers.dns./health
-'''
-returns healthcheck status
-'''
+
+#returns healthcheck status
+
 curl load.balancers.dns.api
-'''
-returns "Hello world"
-'''
+
+#returns "Hello world"
+
 curl load.balancers.dns.api/buckets
-'''
+```
 
