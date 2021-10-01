@@ -18,14 +18,22 @@ App now is available by this DNS name.
 
 CURL commands to use API :
 ```bash
-curl load.balancers.dns./health
-
+curl load.balancers.dns/health
 #returns healthcheck status
 
-curl load.balancers.dns.api
-
+curl load.balancers.dns/api
 #returns "Hello world"
 
-curl load.balancers.dns.api/buckets
+curl load.balancers.dns./api/buckets
+#returns list of available buckets
+
+curl load.balancers.dns/api/<string:bucket>/<string:user>
+#returns all files accessable for <user> in <bucket>
+
+curl -X POST -F file=filename -F bucket=bucketname load.balancers.dns/api/delete
+#deletes file
+
+curl -X POST -F file=@path/to/file -F bucket=bucketname -F user=username load.balancers.dns/api/upload
+#uploads file with username tag
 ```
 
