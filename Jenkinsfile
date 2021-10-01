@@ -28,7 +28,5 @@ pipeline {
                 sh "docker push ${TAG}"
             }
         }    
-
         }
     }
-}
