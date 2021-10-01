@@ -8,14 +8,12 @@ pipeline {
     }
     environment {
         tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+        DOCKERHUB_CREDENTIALS=credentials('kolyavolkov')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
         timestamps()
     }
-    environment {
-		DOCKERHUB_CREDENTIALS=credentials('kolyavolkov')
-	}
     stages {
         stage("build docker image") {
             steps {
