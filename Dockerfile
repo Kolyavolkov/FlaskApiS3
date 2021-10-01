@@ -22,12 +22,12 @@ WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
 RUN poetry install --no-dev
 
-# FROM poetry as tests
-# WORKDIR $PYSETUP_PATH
-# RUN poetry install
-# WORKDIR /app
-# COPY . .
-# RUN make lint && make test
+FROM poetry as tests
+WORKDIR $PYSETUP_PATH
+RUN poetry install
+WORKDIR /app
+COPY . .
+RUN make lint && make test
 
 
 FROM base as artifact
@@ -37,7 +37,7 @@ COPY --from=poetry $PYSETUP_PATH $PYSETUP_PATH
 WORKDIR /app
 COPY . .
 ENV FLASK_APP=restapi
-ENTRYPOINT ["poetry", "run", "flask", "run", "-h", "0.0.0.0"]
+ENTRYPOINT ["poetry", "run", "flask", "run", "--host", "0.0.0.0"]
 HEALTHCHECK --interval=5s \
             --timeout=5s \
             CMD curl -f http://127.0.0.1:5000/health || exit 1
