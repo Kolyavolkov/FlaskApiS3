@@ -1,4 +1,4 @@
-APP_PATH := /app/src
+APP_PATH := restapi
 .DEFAULT_GOAL := help
 
 help:
@@ -22,7 +22,7 @@ lint:
 	poetry run bandit -r ${APP_PATH} -s B101,B104
 
 test:
-	poetry run pytest tests
+	poetry run pytest tests/
 
 run:
 	poetry run flask run

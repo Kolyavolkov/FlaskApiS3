@@ -22,20 +22,22 @@ WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
 RUN poetry install --no-dev
 
-FROM poetry as linter
-COPY --from=poetry $POETRY_HOME $POETRY_HOME
-COPY --from=poetry $PYSETUP_PATH $PYSETUP_PATH
-WORKDIR $PYSETUP_PATH
-RUN poetry install
-WORKDIR /app
-COPY . .
-RUN make lint
+# FROM poetry as tests
+# WORKDIR $PYSETUP_PATH
+# RUN poetry install
+# WORKDIR /app
+# COPY . .
+# RUN make lint && make test
+
 
 FROM base as artifact
+RUN apt-get update; apt-get install -y curl
 COPY --from=poetry $POETRY_HOME $POETRY_HOME
 COPY --from=poetry $PYSETUP_PATH $PYSETUP_PATH
+WORKDIR /app
+COPY . .
 ENV FLASK_APP=restapi
-ENTRYPOINT ["poetry", "run", "flask", "run"]
+ENTRYPOINT ["poetry", "run", "flask", "run", "-h", "0.0.0.0"]
 HEALTHCHECK --interval=5s \
             --timeout=5s \
             CMD curl -f http://127.0.0.1:5000/health || exit 1

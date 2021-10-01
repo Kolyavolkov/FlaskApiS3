@@ -382,7 +382,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "py-healthcheck"
 version = "1.10.1"
 description = "Adds healthcheck endpoints to Flask or Tornado apps"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -578,7 +578,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ccdeb2360ee495d6e623ad9259c5d2725964d32109a176202d6d2179ff2ef31c"
+content-hash = "383ec116044037c2a7375f49de663e3366fbf7401de8795d2ef971628aff56ca"
 
 [metadata.files]
 aniso8601 = [
