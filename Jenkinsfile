@@ -18,7 +18,7 @@ pipeline {
         stage("build docker image") {
             steps {
                 echo "======== building image ========"
-                sh "docker build -f Dockerfile -t ${REPO}:${tag} .project"
+                sh "docker build -f Dockerfile -t ${REPO}:${tag} ./project"
             }
         }
         stage("push docker image") {
