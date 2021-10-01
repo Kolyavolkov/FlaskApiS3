@@ -19,12 +19,14 @@ pipeline {
             steps {
                 echo "======== building image ========"
                 sh "docker build  -t ${TAG} ./project"
-                
             }
+        }
         stage("push docker image") {
-            echo "======== pushing image to dockerhub ========"
+            steps {
+                echo "======== pushing image to dockerhub ========"
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 sh "docker push ${TAG}"
+            }
         }    
 
         }
