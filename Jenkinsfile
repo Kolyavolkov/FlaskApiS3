@@ -18,14 +18,20 @@ pipeline {
         stage("build docker image") {
             steps {
                 echo "======== building image ========"
-                sh "docker build -f Dockerfile -t ${REPO}:${tag} ./project"
+                sh "docker build -f Dockerfile -t ${REPO}:${GIT_COMMIT} -t ${REPO}:latest ./project"
             }
         }
         stage("push docker image") {
             steps {
+                withDockerRegistry([ credentialsId: "kolyavolkov", url: "" ]) {
                 echo "======== pushing image to dockerhub ========"
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                sh "docker push ${REPO}:${tag}"
+                sh "docker push --all-tags ${REPO}"
+                }
+            }
+        stage("clean") {
+            steps {
+                echo "======== removing images ========"
+                sh "docker rmi ${REPO}:${GIT_COMMIT}"
             }
         }    
         }
