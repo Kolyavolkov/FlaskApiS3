@@ -7,7 +7,7 @@ pipeline {
     AWS_DEFAULT_REGION='eu-central-1'
   }
   parameters {
-    string(name: 'STACK_NAME', defaultValue: 'test12')
+    string(name: 'STACK_NAME', defaultValue: 'test')
     string(name: 'GIT_COMMIT', defaultValue: 'latest')
   }
   stages {
