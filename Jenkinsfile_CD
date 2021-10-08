@@ -19,7 +19,6 @@ pipeline {
           --template-body file://aws/AppTemplate.yaml \
           --capabilities CAPABILITY_IAM \
           --parameters ParameterKey=CommitID,ParameterValue=$(GIT_COMMIT)'''
-        }
       }
     }
   }
