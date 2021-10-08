@@ -1,4 +1,3 @@
-
 pipeline {
   agent any
   options {
@@ -9,16 +8,17 @@ pipeline {
   }
   parameters {
     string(name: 'STACK_NAME', defaultValue: 'test12')
+    string(name: 'GIT_COMMIT', defaultValue: 'latest')
   }
   stages {
     stage('Update stack') {
       steps {
         withCredentials([aws(credentialsId: 'AwsVolkov', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
           sh('aws --region central-1 cloudformation update-stack \
-          --stack-name $(STACK_NAME) \
+          --stack-name ${params.STACK_NAME} \
           --template-body file://aws/AppTemplate.yaml \
           --capabilities CAPABILITY_IAM \
-          --parameters ParameterKey=CommitID,ParameterValue=$(GIT_COMMIT)')
+          --parameters ParameterKey=CommitID,ParameterValue=$(params.GIT_COMMIT)')
         }
       }
     }
