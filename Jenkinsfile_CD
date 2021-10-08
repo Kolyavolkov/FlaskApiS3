@@ -14,11 +14,11 @@ pipeline {
     stage('Update stack') {
       steps {
         withCredentials([aws(credentialsId: 'AwsVolkov', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-          sh('''aws --region central-1 cloudformation update-stack \
+          sh('aws --region central-1 cloudformation update-stack \
           --stack-name $(STACK_NAME) \
           --template-body file://aws/AppTemplate.yaml \
           --capabilities CAPABILITY_IAM \
-          --parameters ParameterKey=CommitID,ParameterValue=$(GIT_COMMIT)''')
+          --parameters ParameterKey=CommitID,ParameterValue=$(GIT_COMMIT)')
         }
       }
     }
