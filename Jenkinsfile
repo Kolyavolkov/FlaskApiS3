@@ -28,12 +28,12 @@ pipeline {
                 sh "docker push --all-tags ${REPO}"
                 }
             }
+        }
         stage("clean") {
             steps {
                 echo "======== removing images ========"
                 sh "docker rmi ${REPO}:${GIT_COMMIT}"
             }
         }    
-        }
     }
 }
