@@ -22,12 +22,12 @@ WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
 RUN poetry install --no-dev
 
-FROM poetry as tests
-WORKDIR $PYSETUP_PATH
-RUN poetry install
-WORKDIR /app
-COPY . .
-RUN make lint && make test
+# FROM poetry as tests
+# WORKDIR $PYSETUP_PATH
+# RUN poetry install
+# WORKDIR /app
+# COPY . .
+# RUN make lint && make test
 
 
 FROM base as artifact
