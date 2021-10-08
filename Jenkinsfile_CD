@@ -14,7 +14,7 @@ pipeline {
     stage('Update stack') {
       steps {
         withCredentials([aws(credentialsId: 'AwsVolkov', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-          sh("aws --region central-1 cloudformation update-stack \
+          sh("aws --region eu-central-1 cloudformation update-stack \
           --stack-name ${params.STACK_NAME} \
           --template-body file://aws/AppTemplate.yaml \
           --capabilities CAPABILITY_IAM \
