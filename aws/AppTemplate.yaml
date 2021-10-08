@@ -11,7 +11,7 @@ Parameters:
 
   BucketName:
     Description: Name for S3 bucket
-    Default: 'rest-api-test'
+    Default: 'rest-api-volkov'
     Type: String
 
   CommitID:
