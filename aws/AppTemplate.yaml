@@ -280,11 +280,12 @@ Resources:
             Action: 
               - 's3:GetObject'
               - 's3:ListBucket'
-              - 's3:ListAllMyBuckets'
+              - "s3:ListAllMyBuckets"
               - 's3:PutObject'
               - 's3:DeleteObject'
             Resource:
-              - !Sub "arn:aws:s3:::${BucketName}"
+              - !Join ['', [!GetAtt [AppBucket, Arn], '/*']]
+              - !GetAtt [AppBucket, Arn]
       Roles:
         - !Ref S3Role
 
