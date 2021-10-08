@@ -14,6 +14,11 @@ Parameters:
     Default: 'rest-api-test'
     Type: String
 
+  CommitID:
+    Description: image version to pull from Dockerhub
+    Default: latest
+    Type: String
+
   KeyName:
     Default: 'restate'
     Type: String
@@ -154,7 +159,7 @@ Resources:
       LaunchTemplateData:
         IamInstanceProfile:
           Arn: !GetAtt AppInstanceProfile.Arn
-        ImageId: ami-07df274a488ca9195
+        ImageId: ami-058e6df85cfc7760b
         InstanceType: !Ref InstanceType
         KeyName: !Ref KeyName
         Monitoring:
@@ -169,7 +174,7 @@ Resources:
             service docker start
             usermod -a -G docker ec2-user
             chkconfig docker on
-            docker run -p 80:5000 kolyavolkov/restapi3:3eba5bb475
+            docker run -p 80:5000 kolyavolkov/restapi3:${CommitID}
 
   AppASG:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -273,11 +278,13 @@ Resources:
         Statement:
           - Effect: Allow
             Action: 
-              - 's3:Get*'
-              - 's3:List*'
-              - 's3:Put*'
-              - 's3:Delete*'
-            Resource: '*'
+              - 's3:GetObject'
+              - 's3:ListBucket'
+              - 's3:ListAllMyBuckets'
+              - 's3:PutObject'
+              - 's3:DeleteObject'
+            Resource:
+              - !Sub "arn:aws:s3:::${BucketName}"
       Roles:
         - !Ref S3Role
 
